@@ -1,0 +1,13 @@
+{
+    "vertical_cards":[
+       {
+            "title": "Vertical Card",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque mi ac libero aliquam fringilla. Donec id pretium magna. Sed ac laoreet elit. Pellentesque commodo aliquam augue, quis interdum diam. Maecenas ultricies maximus nisi sit amet ullamcorper. Curabitur sit amet arcu ullamcorper, scelerisque nulla ac, pharetra turpis. Vestibulum non molestie arcu. Cras porttitor, mauris cursus egestas tristique, ipsum massa egestas ligula, eget feugiat diam leo quis lectus. Donec eleifend, diam vel tincidunt ullamcorper, metus sem euismod tellus, a ullamcorper nulla eros ac massa. Curabitur accumsan non felis ac fermentum. Donec at consectetur turpis. Sed vehicula neque id orci mollis viverra. Vestibulum imperdiet ante sit amet neque aliquet, vitae ornare libero cursus. Donec placerat, augue iaculis tempor rhoncus, leo erat ullamcorper urna, quis ultrices risus tortor vitae dolor. Suspendisse quis finibus risus, quis fermentum lectus.",
+            "imagem": {
+                "url": "https://images.unsplash.com/photo-1645943020355-305df166473d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=928&q=80",
+                "alt": "Caveira Neon Vermelho" 
+            },
+            "publish_date": "05/09/2023"
+        } 
+    ]
+}
