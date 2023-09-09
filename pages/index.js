@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { Box, Heading, Text, Stack, Image, Button } from '@chakra-ui/react';
 
-/* const GET_PRODUCTS = gql`
+const GET_PRODUCTS = gql`
   query {
     allProducts {
       id
@@ -14,10 +14,15 @@ import { Box, Heading, Text, Stack, Image, Button } from '@chakra-ui/react';
       price_in_cents
     }
   }
-`; */
+`;
 
 const Home = () => {
-  const { products } = require('./api/db');
+  const { loading, error, data } = useQuery(GET_PRODUCTS);
+
+  if (loading) return <p>Carregando...</p>;
+  if (error) return <p>Erro: {error.message}</p>;
+
+  const products = data.allProducts;
 
   return (
     <Stack spacing={4} align="center">
