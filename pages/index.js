@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
       <Heading className={`${title.className}`}> capputeeno </Heading>
       <main className={`${styles.main} ${inter.className}`}>
-        <Heading> Oi </Heading>
+        <Heading> Teste </Heading>
         <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
