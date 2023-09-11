@@ -2,7 +2,7 @@ import { extendTheme } from '@chakra-ui/react'
 
 const customTheme = {
     fonts: {
-        /* body: 'Saira, sans-serif', */
+        body: 'Saira, sans-serif',
     }
 };
 
