@@ -1,9 +1,10 @@
 import React from 'react'
+import { FormControl, FormLabel, Input, FormHelperText } from '@chakra-ui/react'
 
-const Input = () => {
+export default function ChakraInput() {
   return (
-    <input></input>
+    <FormControl>
+      <Input type='text'/>
+    </FormControl>
   )
 }
-
-export default Input

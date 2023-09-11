@@ -1,6 +1,6 @@
 import { Image, Flex, HStack } from "@chakra-ui/react";
 import Link from "next/link";
-import Input from "../Input/Input";
+import ChakraInput from "../Input/Input";
 
 export default function Header() {
     return (
@@ -9,7 +9,7 @@ export default function Header() {
                     <Link href={'/'}>
                         <Image src="capputeeno.svg"></Image>
                     </Link>
-                    <Input/>
+                    <ChakraInput/> 
                     <Link href={'/cart'}>Cart (0)</Link>
                 </HStack>
             </HStack>
