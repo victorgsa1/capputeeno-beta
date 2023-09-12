@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-admin",
+  "name": "capputeeno-beta",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,6 +23,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
+    "react-paginate": "^8.2.0",
     "styled-components": "^6.0.7"
   },
   "devDependencies": {
