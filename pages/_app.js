@@ -6,7 +6,11 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 
 const GlobalStyles = createGlobalStyle`
-   body {
+  @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+  * {
+    font-family: 'Saira', sans-serif;
+  } 
+  body {
     padding: 0;
     margin: 0;
   }
