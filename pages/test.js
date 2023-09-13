@@ -20,6 +20,7 @@ const GET_PRODUCTS = gql`
 const Test = () => {
   
   const [currentPageState, setCurrentPageState] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('currentPage', currentPageState.toString());
@@ -40,10 +41,15 @@ const Test = () => {
   const productsPerPage = 12;
   const pageCount = Math.ceil(products.length / productsPerPage);
 
-  const renderProducts = () => {
+    const renderProducts = () => {
     const startIndex = currentPageState * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    const currentProducts = products.slice(startIndex, endIndex);
+
+    const filteredProducts = selectedCategory
+    ? products.filter(product => product.category === selectedCategory)
+    : products;
+
+  const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
     return currentProducts.map((product) => (
       <Box
@@ -78,9 +84,21 @@ const Test = () => {
     setCurrentPageState(selected);
   };
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    // Reset a página atual para 0 quando a categoria é alterada
+    setCurrentPageState(0);
+  };
+
   return (
     <HStack w="full" justify="center">
-    <Stack spacing={4} align="center" maxW='container.xl'>
+     <Stack spacing={4} align="center" maxW='container.xl' px='4'>
+      <HStack align="start">
+        <Button onClick={() => handleCategoryChange(null)}>Todos</Button>
+        <Button onClick={() => handleCategoryChange('mugs')}>Mugs</Button>
+        <Button onClick={() => handleCategoryChange('t-shirts')}>T-Shirts</Button>
+      </HStack>
+      
       <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4">
         {renderProducts()}
       </Box>
