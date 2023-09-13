@@ -5,6 +5,7 @@ import { Box, Heading, Text, Stack, Image, Button, HStack, Flex, Select } from '
 import ReactPaginate from 'react-paginate'
 import styled from '@emotion/styled';
 import OrderBy from '@/components/OrderBy/OrderBy';
+import Paginate from '@/components/Paginate/Paginate';
 
 const GET_PRODUCTS = gql`
   query {
@@ -98,21 +99,29 @@ const Test = () => {
   };
 
   return (
-    <HStack w="full" justify="center" bg='gray.50' pt='8'>
+    <HStack w="full" justify="center" bg='#f0f0f5' pt='8'>
     <Flex direction="column" alignItems="flex-start" spacing={4} align="center" maxW='container.xl' px='4'>
-        <Flex w="full" direction="row" alignItems="center" pb='16' justify="space-between">
+        <Flex w="full" direction="row" alignItems="center" pb='4' justify="space-between">
           <HStack>
             <Button
               variant="ghost" 
-              fontWeight='black'
+              fontWeight='medium'
               minW='auto'
+              color='#737380'
               borderRadius={ 0 }
               borderBottom={selectedCategory === null ? '4px solid orange' : 'none'}
               _hover={{
                 borderBottom: '4px solid orange',
               }}
+              _active={{
+                bg: 'ghost !important',
+                color: 'black !important',
+                fontWeight: 'black !important',
+              }}
               _focus={{
-                bg: 'ghost',
+                bg: 'ghost !important',
+                color: 'black !important',
+                fontWeight: 'black !important',
               }}
               onClick={() => handleCategoryChange(null)}
             > 
@@ -121,15 +130,23 @@ const Test = () => {
 
             <Button
               variant="ghost" 
-              fontWeight='black'
+              fontWeight='medium'
               minW='auto'
+              color='#737380'
               borderRadius={ 0 }
               borderBottom={selectedCategory === 'mugs' ? '4px solid orange' : 'none'}
               _hover={{
                 borderBottom: '4px solid orange',
               }}
+              _active={{
+                bg: 'ghost',
+                color: 'black',
+                fontWeight: 'black',
+              }}
               _focus={{
                 bg: 'ghost',
+                color: 'black',
+                fontWeight: 'black',
               }}
               onClick={() => handleCategoryChange('mugs')}
             > 
@@ -138,15 +155,23 @@ const Test = () => {
 
             <Button
               variant="ghost" 
-              fontWeight='black'
+              fontWeight='medium'
               minW='auto'
+              color='#737380'
               borderRadius={ 0 }
               borderBottom={selectedCategory === 't-shirts' ? '4px solid orange' : 'none'}
               _hover={{
                 borderBottom: '4px solid orange',
               }}
+              _active={{
+                bg: 'ghost',
+                color: 'black',
+                fontWeight: 'black',
+              }}
               _focus={{
                 bg: 'ghost',
+                color: 'black',
+                fontWeight: 'black',
               }}
               onClick={() => handleCategoryChange('t-shirts')}
             > 
@@ -154,28 +179,58 @@ const Test = () => {
             </Button>
           </HStack>
           <HStack>
-            <Flex direction="row" alignItems="center">
+            <Flex direction="row" alignItems="center" mr='-2'>
               <OrderBy />
             </Flex>
           </HStack>  
-        </Flex>
+        </Flex>      
+        <Flex direction='row' w='full'justify='end' pb='8'>
+          <HStack>
+            <Box>  
+              <Paginate
+                pageCount={pageCount}
+                currentPageState={currentPageState}
+                handlePageChange={handlePageChange}
+                previousClassName='previousNum'
+                nextClassName='nextNum'
+              />
+            </Box>
+            <Box ml='2'>
+              <Paginate
+                pageCount={pageCount}
+                currentPageState={currentPageState}
+                handlePageChange={handlePageChange}
+                pageClassName={'numbers'}
+              />
+            </Box>
+          </HStack>
+        </Flex> 
 
       <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4">
         {renderProducts()}
       </Box>
       
-      <ReactPaginate
-        previousLabel={'Anterior'}
-        nextLabel={'Próximo'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={1}
-        pageRangeDisplayed={3}
-        onPageChange={handlePageChange}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-        initialPage={currentPageState}
-      />
+      <Flex direction='row' w='full'justify='end' pt='16' pb='6'>
+        <HStack>
+          <Box>  
+            <Paginate
+              pageCount={pageCount}
+              currentPageState={currentPageState}
+              handlePageChange={handlePageChange}
+              previousClassName='previousNum'
+              nextClassName='nextNum'
+            />
+          </Box>
+          <Box ml='2'>
+            <Paginate
+              pageCount={pageCount}
+              currentPageState={currentPageState}
+              handlePageChange={handlePageChange}
+              pageClassName={'numbers'}
+            />
+          </Box>
+        </HStack>
+      </Flex> 
     </Flex>
     </HStack>
   );
