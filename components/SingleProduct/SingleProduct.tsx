@@ -24,7 +24,7 @@ function SingleProduct({ product }) {
                     <Box >
                         <Image src={product.image_url} alt={product.name} borderRadius='md' />
                     </Box>
-                    <Box ml='4' ml={['0', '-40']}>
+                    <Box ml={['0', '-40']}>
                         <Flex direction='column' h='full'>    
                             <Text fontSize="md" fontWeight='400' color="gray.500" mb='2'>
                                 Caneca
