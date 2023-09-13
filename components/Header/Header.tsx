@@ -5,7 +5,7 @@ import { FiShoppingBag } from 'react-icons/fi'
 
 export default function Header() {
     return (
-        <HStack w="full" h="10vh" justify="center">
+        <HStack w="full" h="8vh" justify="center">
             <HStack w="full" maxW='container.xl' px="4" justify="space-between">
                 <Link href={'/'}>
                     <Image src="capputeeno.svg"></Image>

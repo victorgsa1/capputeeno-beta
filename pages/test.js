@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
-import { Box, Heading, Text, Stack, Image, Button, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, Stack, Image, Button, HStack, Flex } from '@chakra-ui/react';
 import ReactPaginate from 'react-paginate'
 
 const GET_PRODUCTS = gql`
@@ -91,14 +91,63 @@ const Test = () => {
   };
 
   return (
-    <HStack w="full" justify="center">
-     <Stack spacing={4} align="center" maxW='container.xl' px='4'>
-      <HStack align="start">
-        <Button onClick={() => handleCategoryChange(null)}>Todos</Button>
-        <Button onClick={() => handleCategoryChange('mugs')}>Mugs</Button>
-        <Button onClick={() => handleCategoryChange('t-shirts')}>T-Shirts</Button>
-      </HStack>
-      
+    <HStack w="full" justify="center" bg='gray.50' pt='8'>
+    <Flex direction="column" alignItems="flex-start" spacing={4} align="center" maxW='container.xl' px='4'>
+        <Flex direction="row" alignItems="center" pb='16'>
+          <HStack>
+            <Button
+              variant="ghost" 
+              fontWeight='black'
+              minW='auto'
+              borderRadius={ 0 }
+              borderBottom={selectedCategory === null ? '4px solid orange' : 'none'}
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}
+              _focus={{
+                bg: 'ghost',
+              }}
+              onClick={() => handleCategoryChange(null)}
+            > 
+              TODOS OS PRODUTOS
+            </Button>
+            
+            <Button
+              variant="ghost" 
+              fontWeight='black'
+              minW='auto'
+              borderRadius={ 0 }
+              borderBottom={selectedCategory === 'mugs' ? '4px solid orange' : 'none'}
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}
+              _focus={{
+                bg: 'ghost',
+              }}
+              onClick={() => handleCategoryChange('mugs')}
+            > 
+              CANECAS
+            </Button>
+
+            <Button
+              variant="ghost" 
+              fontWeight='black'
+              minW='auto'
+              borderRadius={ 0 }
+              borderBottom={selectedCategory === 't-shirts' ? '4px solid orange' : 'none'}
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}
+              _focus={{
+                bg: 'ghost',
+              }}
+              onClick={() => handleCategoryChange('t-shirts')}
+            > 
+              T-SHIRTS
+            </Button>
+          </HStack>
+        </Flex>
+
       <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4">
         {renderProducts()}
       </Box>
@@ -115,7 +164,7 @@ const Test = () => {
         activeClassName={'active'}
         initialPage={currentPageState}
       />
-    </Stack>
+    </Flex>
     </HStack>
   );
 };
