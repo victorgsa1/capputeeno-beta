@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, InputGroupProps, Input, FormHelperText, Image, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { FormControl, InputGroupProps, Input, FormHelperText, Image, InputGroup, InputRightElement, Icon } from '@chakra-ui/react'
 import { FiSearch } from 'react-icons/fi'
 
 export default function Search() {
@@ -7,7 +7,9 @@ export default function Search() {
     <FormControl maxW="460px" w="full">
       <InputGroup maxW="460px">
         <InputRightElement pointerEvents='none'>
-          <FiSearch/>
+          <Icon fontSize='2xl'>
+            <FiSearch/>
+          </Icon>
         </InputRightElement>
       <Input 
         type='text' 

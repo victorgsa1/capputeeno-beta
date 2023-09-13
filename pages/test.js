@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
-import { Box, Heading, Text, Stack, Image, Button, HStack, Flex } from '@chakra-ui/react';
+import { Box, Heading, Text, Stack, Image, Button, HStack, Flex, Select } from '@chakra-ui/react';
 import ReactPaginate from 'react-paginate'
+import styled from '@emotion/styled';
+import OrderBy from '@/components/OrderBy/OrderBy';
 
 const GET_PRODUCTS = gql`
   query {
@@ -17,10 +19,16 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+
 const Test = () => {
   
   const [currentPageState, setCurrentPageState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSort, setSelectedSort] = useState(null); 
+
+  // Opções de ordenação
+  const sortOptions = [
+  ];
 
   useEffect(() => {
     localStorage.setItem('currentPage', currentPageState.toString());
@@ -41,13 +49,13 @@ const Test = () => {
   const productsPerPage = 12;
   const pageCount = Math.ceil(products.length / productsPerPage);
 
-    const renderProducts = () => {
-    const startIndex = currentPageState * productsPerPage;
-    const endIndex = startIndex + productsPerPage;
+  const renderProducts = () => {
+  const startIndex = currentPageState * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
 
-    const filteredProducts = selectedCategory
-    ? products.filter(product => product.category === selectedCategory)
-    : products;
+  const filteredProducts = selectedCategory
+  ? products.filter(product => product.category === selectedCategory)
+  : products;
 
   const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
@@ -86,14 +94,13 @@ const Test = () => {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    // Reset a página atual para 0 quando a categoria é alterada
     setCurrentPageState(0);
   };
 
   return (
     <HStack w="full" justify="center" bg='gray.50' pt='8'>
     <Flex direction="column" alignItems="flex-start" spacing={4} align="center" maxW='container.xl' px='4'>
-        <Flex direction="row" alignItems="center" pb='16'>
+        <Flex w="full" direction="row" alignItems="center" pb='16' justify="space-between">
           <HStack>
             <Button
               variant="ghost" 
@@ -111,7 +118,7 @@ const Test = () => {
             > 
               TODOS OS PRODUTOS
             </Button>
-            
+
             <Button
               variant="ghost" 
               fontWeight='black'
@@ -146,6 +153,11 @@ const Test = () => {
               T-SHIRTS
             </Button>
           </HStack>
+          <HStack>
+            <Flex direction="row" alignItems="center">
+              <OrderBy />
+            </Flex>
+          </HStack>  
         </Flex>
 
       <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4">
