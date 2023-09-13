@@ -11,6 +11,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Saira', sans-serif;
   } 
   body {
+    background-color: #f0f0f5 !important;
     padding: 0;
     margin: 0;
   }

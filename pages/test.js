@@ -100,7 +100,6 @@ const Test = () => {
           <HStack>
             <Button
               variant="ghost" 
-              fontWeight='medium'
               minW='auto'
               color='#737380'
               borderRadius={ 0 }
@@ -125,7 +124,6 @@ const Test = () => {
 
             <Button
               variant="ghost" 
-              fontWeight='medium'
               minW='auto'
               color='#737380'
               borderRadius={ 0 }
@@ -150,7 +148,6 @@ const Test = () => {
 
             <Button
               variant="ghost" 
-              fontWeight='medium'
               minW='auto'
               color='#737380'
               borderRadius={ 0 }
