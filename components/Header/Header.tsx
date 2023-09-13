@@ -8,7 +8,7 @@ export default function Header() {
         <HStack w="full" h="8vh" justify="center">
             <HStack w="full" maxW='container.xl' px="4" justify="space-between">
                 <Link href={'/'}>
-                    <Image src="capputeeno.svg"></Image>
+                    <Image src="/capputeeno.svg"></Image>
                 </Link>
                 <HStack flex="1" justify="flex-end" alignItems="center" spacing='12'>
                     <Search />
