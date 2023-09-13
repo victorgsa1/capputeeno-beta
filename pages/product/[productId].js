@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import Header from '../../components/Header/Header';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import { useQuery, gql } from '@apollo/client';
-import styled from 'styled-components';
 
 const GET_ALL_PRODUCTS = gql`
   query {

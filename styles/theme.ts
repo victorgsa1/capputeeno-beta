@@ -6,6 +6,7 @@ const customTheme = {
     },
     color: {
         bgbrand: '#f0f0f5',
+        brandp: '#41414D',
     }
 };
 
