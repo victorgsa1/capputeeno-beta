@@ -4,8 +4,8 @@ import { Flex, Box, Grid, Image, Text, Heading, Button, Icon } from '@chakra-ui/
 
 const CartItem = ({ product }) => {
     return (
-      <Flex borderBottom="1px solid #ddd" py="4" px="2" alignItems="center">
-        <Image src={product.image_url} alt={product.name} width="80px" height="80px" mr="4" />
+      <Flex mb='4' alignItems="center" bg='white' borderRadius='xl'>
+        <Image src={product.image_url} alt={product.name} w='40%' mr="4" borderLeftRadius='xl'/>
         <Box flex="1">
           <Heading size="md" fontWeight="600" mb="2">
             {product.name}

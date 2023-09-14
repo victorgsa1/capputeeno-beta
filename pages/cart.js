@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header/Header';
-import { FiShoppingBag } from 'react-icons/fi';
-import { Flex, Box, Grid, Text } from '@chakra-ui/react';
 import CartItem from '../components/Cart/CartItem';
+import Backward from '../components/Backward/Backward';
+import { HStack, Flex, Box, Grid, Text } from '@chakra-ui/react';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -13,32 +13,36 @@ const Cart = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
       setCartItems(storedCart);
     }
+    
   }, []);
-
   return (
     <>
       <Header />
-      <Flex w="full" justify="center" bg="#f0f0f5" pt="8">
-        <Flex direction="column" alignItems="flex-start" maxW="container.xl" px="4">
+      <HStack w="full" justify="center" bg="#f0f0f5" pt="8">
+        <Flex direction="column" alignItems="flex-start" align='center' w='full' maxW='container.xl'>
           <Link href={`/`}>
             <Flex direction="row" justify="space-between" p="4">
-              <Box as={FiShoppingBag} fontSize="20px" />
+              <Backward />
               <Text ml="2">Voltar</Text>
             </Flex>
           </Link>
-          <Flex px="4" pt="4">
-            <Grid templateColumns="8fr 4fr" gap={4} w="full">
-              <Box>
+          <Flex direction='row' px="4" pt="4">
+            <Grid templateColumns={['1fr', '1fr', '1fr', '8fr 4fr']} gap='4'>
+              <Box w='full'>
                 {cartItems.map((product) => (
                   <CartItem key={product.id} product={product} />
                 ))}
               </Box>
-              <Box>
+              <Box bg='white'>
+                <Flex direction='column' h='full'>  
+                  <Box w='full' >
+                  </Box>
+                </Flex>
               </Box>
             </Grid>
           </Flex>
         </Flex>
-      </Flex>
+      </HStack>
     </>
   );
 };
