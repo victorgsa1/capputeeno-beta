@@ -6,6 +6,14 @@ import OrderBy from '@/components/OrderBy/OrderBy';
 import Paginate from '@/components/Paginate/Paginate';
 import Link from 'next/link';
 
+const addToCart = (product) => {
+  const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  existingCart.push(product);
+
+  localStorage.setItem('cart', JSON.stringify(existingCart));
+};
+
 const GET_PRODUCTS = gql`
   query {
     allProducts {
@@ -21,6 +29,14 @@ const GET_PRODUCTS = gql`
 
 const Test = () => {
   
+  const addToCart = (product) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    existingCart.push(product);
+  
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+  };
+
   const [currentPageState, setCurrentPageState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -75,7 +91,7 @@ const Test = () => {
             <Text fontSize="sm" color="gray.500">
               {/* Categoria: {product.category} */}
             </Text>
-            <Button mt="4" colorScheme="black" size="sm" variant="outline">
+            <Button mt="4" colorScheme="black" size="sm" variant="outline" onClick={() => addToCart(product)}>
               Adicionar ao Carrinho
             </Button>
           </Box>

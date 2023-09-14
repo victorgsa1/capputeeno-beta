@@ -3,9 +3,9 @@ import Test from "./test";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Header/>
       <Test/>
-    </div>
+    </>
   );
 }
