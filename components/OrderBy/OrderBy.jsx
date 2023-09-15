@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledSelectContainer = styled(Box)`
   position: relative;
+  z-index: 0 !important;
 
   label {
     position: absolute;
@@ -33,7 +34,7 @@ const sortOptions = [
 
 const OrderBy = ({ selectedSort, setSelectedSort }) => {
   return (
-    <StyledSelectContainer>
+    <StyledSelectContainer >
       <label htmlFor="sortSelect">Organizar por</label>
       <Select
         id="sortSelect"

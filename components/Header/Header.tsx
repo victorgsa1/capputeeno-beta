@@ -1,28 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Image, Flex, HStack, Icon, Badge } from "@chakra-ui/react";
 import Link from "next/link";
 import Search from "../Search/Search";
 import { FiShoppingBag } from 'react-icons/fi';
 import { useCart } from "../Cart/CartContext";
-import products from '../../pages/test'
 
 export default function Header() {
+
     const { cartItemCount } = useCart();
-    const [searchText, setSearchText] = useState('');
-
-    const handleSearchTextChange = (text) => {
-        setSearchText(text);
-    };
-
-    const handleSearch = (text) => {
-        setSearchText(text);
-      };
-      
-    const filteredProducts = Array.isArray(products)
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-    : [];
     return (
         <HStack w="full" h="8vh" bg='white' justify="center">
             <HStack w="full" maxW='container.xl' px="4" justify="space-between">
@@ -30,12 +15,7 @@ export default function Header() {
                     <Image src="/capputeeno.svg"></Image>
                 </Link>
                 <HStack flex="1" justify="flex-end" alignItems="center" spacing='12'>
-                    <Search onSearch={handleSearch}  onSearchTextChange={handleSearchTextChange}/>
-                    <ul>
-                        {filteredProducts.map((product) => (
-                        <li key={product.id}>{product.name}</li>
-                        ))}
-                    </ul>
+                    <Search/>
                     <Link href={'/cart'}>
                         <Icon fontSize='2xl'>
                             <FiShoppingBag />

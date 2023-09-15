@@ -5,6 +5,7 @@ import {createGlobalStyle} from 'styled-components';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../styles/theme';
 import { CartProvider } from '../components/Cart/CartContext';
+import { ProductProvider } from '../components/Product/ProductContext';
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500&display=swap');
@@ -23,10 +24,12 @@ function MyApp({ Component, pageProps }) {
     
       <ChakraProvider theme={theme}>
         <ApolloProvider client={client}>
+          <ProductProvider>
           <CartProvider>
             <GlobalStyles/>
             <Component {...pageProps} />
           </CartProvider>
+          </ProductProvider>
         </ApolloProvider>
       </ChakraProvider> 
   )
