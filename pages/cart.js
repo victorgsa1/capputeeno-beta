@@ -59,7 +59,7 @@ const Cart = () => {
   return (
     <>
       <Header />
-      <HStack w="full" justify="center" bg="#f0f0f5" pt="8">
+      <HStack w="full" justify="center" overflowY='hidden' pt="8">
         <Flex direction="column" alignItems="flex-start" align='center' w='full' maxW='container.xl'>
           <Link href={`/`}>
             <Flex direction="row" justify="space-between" p="4">
@@ -69,14 +69,14 @@ const Cart = () => {
           </Link>
           <Flex direction='row' px="4" pt="4">
             <Grid templateColumns={['1fr', '1fr', '1fr', '8fr 4fr']} gap='4'>
-              <Flex direction='column' w='full' h='full' maxH='80'>
+              <Flex direction='column' w='full' h='full' maxH='84vh' overflowY='auto'>
                 {cartItems.length > 0 ? (
                   cartItems.map((product) => (
                     <CartItem key={product.id} product={product} onRemove={() => handleRemoveItem(product)} onUpdateQuantity={handleUpdateQuantity}/>
                   ))
                 ) : (
                   <HStack h='full' bg='white' p='16' borderRadius='lg'> 
-                    <Heading size={['md', 'lg']} fontWeight="300" color='gray.800'>
+                    <Heading size={['lg', 'xl']} fontWeight="400" color='#737380'>
                       Seu carrinho está vazio, adicione produtos para visualizar.
                     </Heading>
                   </HStack>
@@ -120,7 +120,7 @@ const Cart = () => {
                     </Text>
                   </Button>
                 </Flex>
-                <Flex direction='row' alignItems='flex-end' justify='space-between' mt='90%'>
+                <Flex direction='row' alignItems='flex-end' justify='space-between' mt={['80%', '90%']}>
                   <Flex direction='column' color='#737380' fontSize='14px' style={{ textDecoration: "underline" }} cursor='pointer'>
                     <Text>AJUDA</Text>
                     <Text mt='4'>REEMBOLSOS</Text>

@@ -42,7 +42,7 @@ const CartItem = ({ product, onRemove, onUpdateQuantity}) => {
         <HStack h='full' ml='4'> 
           <Flex direction='column' h='full' >
             <Flex direction='row' mt='6' justify='space-between'>
-              <Heading size={['sm', 'lg']} fontWeight="300" color='gray.800'>
+              <Heading size={['xs', 'lg']} fontWeight="300" color='gray.800'>
                 {product.name}
               </Heading>
               <Icon fontSize={['xl', '2xl']} color='red' alignSelf='center' mr='4' cursor='pointer' onClick={handleRemove}>
@@ -53,7 +53,7 @@ const CartItem = ({ product, onRemove, onUpdateQuantity}) => {
                 {product.description}
               </Text>
             <Flex direction='row' alignItems='flex-end' justify='space-between' mt='6'>
-              <Select w='5vw' h='5vh' bg='#F3F5F6' alignItems='flex-end' value={quantity} onChange={handleQuantityChange}>
+              <Select w={['20vw', '5vw']} h={['3vh','5vh']} bg='#F3F5F6' alignItems='flex-end' value={quantity} onChange={handleQuantityChange}>
                 {Array.from({ length: 10 }, (_, index) => (
                   <option key={index} value={index + 1}>
                     {index + 1}
