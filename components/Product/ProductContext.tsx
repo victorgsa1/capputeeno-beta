@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 import ProductType from '../../pages/api/type';
 
   interface ProductContextType {
-    products: ProductType[]; // Certifique-se de definir o tipo ProductType corretamente
+    products: ProductType[];
     setProducts: (products: ProductType[]) => void;
   }
   

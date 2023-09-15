@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { Box, Heading, Text, Stack, Image, Button, HStack, Flex} from '@chakra-ui/react';
-import OrderBy from '@/components/OrderBy/OrderBy';
+import OrderBy from '../components/OrderBy/OrderBy';
 import Paginate from '@/components/Paginate/Paginate';
 import Link from 'next/link';
 import { useCart } from '../components/Cart/CartContext';
@@ -21,8 +21,7 @@ const GET_PRODUCTS = gql`
 `;
 
 const Test = () => {
-  
-  const { cartItemCount, setCartItemCount } = useCart();
+    const { cartItemCount, setCartItemCount } = useCart();
 
   const addToCart = (product) => {
     const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -42,9 +41,10 @@ const Test = () => {
     setCartItemCount(existingCart.length);
   };
   
-
+  const [selectedSort, setSelectedSort] = useState('');
   const [currentPageState, setCurrentPageState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [products, setSortedProducts] = useState([]);
 
   useEffect(() => {
     localStorage.setItem('currentPage', currentPageState.toString());
@@ -60,21 +60,29 @@ const Test = () => {
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
 
-  const products = data.allProducts;
+  const allProducts = data.allProducts;
 
   const productsPerPage = 12;
-  const pageCount = Math.ceil(products.length / productsPerPage);
+  const pageCount = Math.ceil(allProducts.length / productsPerPage);
 
   const renderProducts = () => {
-  const startIndex = currentPageState * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
+    const startIndex = currentPageState * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
 
-  const filteredProducts = selectedCategory
-  ? products.filter(product => product.category === selectedCategory)
-  : products;
+    let sortedProductsToRender = [...allProducts];
 
-  const currentProducts = filteredProducts.slice(startIndex, endIndex);
-
+    if (selectedSort === 'price_high_low') {
+      sortedProductsToRender.sort((a, b) => b.price_in_cents - a.price_in_cents);
+    } else if (selectedSort === 'price_low_high') {
+      sortedProductsToRender.sort((a, b) => a.price_in_cents - b.price_in_cents);
+    }
+  
+    const filteredProducts = selectedCategory
+      ? sortedProductsToRender.filter(product => product.category === selectedCategory)
+      : sortedProductsToRender;
+  
+    const currentProducts = filteredProducts.slice(startIndex, endIndex);
+  
     return currentProducts.map((product) => (
       <Link href={`/product/${product.id}`} key={product.id}>
         <Box
@@ -194,7 +202,7 @@ const Test = () => {
           </HStack>
           <HStack>
             <Flex direction="row" alignItems="center" mr='-2'>
-              <OrderBy />
+              <OrderBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} products={allProducts} setSortedProducts={setSortedProducts} />
             </Flex>
           </HStack>  
         </Flex>      

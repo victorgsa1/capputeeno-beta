@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Select, Box } from "@chakra-ui/react";
 import styled from "styled-components";
 
@@ -32,15 +33,28 @@ const sortOptions = [
   { value: 'best_sellers', label: 'Mais vendidos' },
 ];
 
-const OrderBy = ({ selectedSort, setSelectedSort }) => {
+const OrderBy = ({ selectedSort, setSelectedSort, products, setSortedProducts }) => {
+  const handleSortChange = (value) => {
+    setSelectedSort(value);
+  
+    if (value === 'price_high_low') {
+      const sortedProducts = products.slice().sort((a, b) => b.price_in_cents - a.price_in_cents);
+      setSortedProducts(sortedProducts);
+    }
+    else if (value === 'price_low_high') {
+      const sortedProducts = products.slice().sort((a, b) => a.price_in_cents - b.price_in_cents);
+      setSortedProducts(sortedProducts);
+    }
+  };
+
   return (
-    <StyledSelectContainer >
+    <StyledSelectContainer>
       <label htmlFor="sortSelect">Organizar por</label>
       <Select
         id="sortSelect"
         variant="unstyled"
         value={selectedSort}
-        onChange={(e) => setSelectedSort(e.target.value)}
+        onChange={(e) => handleSortChange(e.target.value)}
         mr="-10"
       >
         {sortOptions.map((option) => (
