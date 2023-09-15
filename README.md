@@ -1,38 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-commerce Capputeeno ☕
+Este é um projeto de e-commerce para a venda de canecas e camisetas com as seguintes funcionalidades:
 
-## Getting Started
+## Funcionalidades Principais:
+- Catálogo de Produtos:
+Exibe todos os produtos disponíveis com paginação.
 
-First, run the development server:
+- Filtragem por Categoria:
+Permite filtrar os produtos por categoria, como "Canecas" ou "Camisetas".
+
+- Busca por Nome do Produto:
+Permite buscar produtos pelo nome.
+
+- Adicionar e Remover Produtos do Carrinho:
+Os usuários podem adicionar produtos ao carrinho, onde podem revisar e remover itens.
+
+## Tecnologias Utilizadas:
+- Next.js e Typescript para o desenvolvimento.
+- ChakraUI e Styled-components para estilização.
+- Local Storage para gerenciamento do carrinho.
+- Consumo de uma API GraphQL por meio do Apollo Client.
+
+Instruções de Instalação
+Para executar o projeto em sua máquina local, siga estas etapas.
+
+Clone o repositório para o seu ambiente local:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/seu-usuario/seu-repositorio.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navegue até a pasta raiz do projeto:
+```bash
+cd raiz-do-projeto
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Instale as dependências do projeto:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+npm install
+# ou 
+yarn add
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Navegue até a pasta pages/api:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+cd pages/api
+```
 
-## Learn More
+Dentro da pasta pages/api, instale as dependências específicas da API:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+# ou
+yarn add
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Volte à pasta raiz do projeto:
+```bash
+cd ../..
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Inicie o servidor de desenvolvimento:
+```bash
+npm run dev
+# ou
+yarn dev
+```
 
-## Deploy on Vercel
+Em um terminal separado, inicie a API GraphQL:
+```bash
+cd pages/api
+npm start
+# ou
+yarn start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Agora você pode acessar a aplicação em seu navegador em http://localhost:3000.
