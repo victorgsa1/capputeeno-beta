@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 import { Flex, Box, Grid, Image, Text, Heading, Button, Icon, Select, HStack, MenuOptionGroup } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi'
 
+const CartItem = ({ product, onRemove, onUpdateQuantity}) => {
+  const [quantity, setQuantity] = useState(1);
 
-
-const CartItem = ({ product, onRemove }) => {
   const handleRemove = () => {
     onRemove(product);
   };
+
+  useEffect(() => {
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingProduct = existingCart.find((item) => item.id === product.id);
+    if (existingProduct) {
+      setQuantity(existingProduct.quantity);
+    }
+  }, [product.id]);
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value);
+    setQuantity(newQuantity);
+  
+    onUpdateQuantity(product.id, newQuantity);
+
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const updatedCart = existingCart.map((item) => {
+      if (item.id === product.id) {
+        item.quantity = newQuantity;
+      }
+      return item;
+    });
+  
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };  
+
   return (
     <Flex mb='6' bg='white' borderRadius='xl' direction='row'>
       <HStack>
@@ -27,11 +53,12 @@ const CartItem = ({ product, onRemove }) => {
                 {product.description}
               </Text>
             <Flex direction='row' alignItems='flex-end' justify='space-between' mt='6'>
-              <Select w='5vw' h='5vh' bg='#F3F5F6' alignItems='flex-end'>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+              <Select w='5vw' h='5vh' bg='#F3F5F6' alignItems='flex-end' value={quantity} onChange={handleQuantityChange}>
+                {Array.from({ length: 10 }, (_, index) => (
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
               </Select>
               <Text fontSize={['sm', 'lg', 'xl']} fontWeight="600" color="black" mr='4'>
                 R$ {(product.price_in_cents / 100).toLocaleString('pt-BR', {

@@ -6,17 +6,26 @@ import Backward from '../Backward/Backward';
 import { useRouter } from 'next/router';
 
 
+
 function SingleProduct({ product }) {
 
-    const addToCart = (product) => {
-        const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-        existingCart.push(product);
-        localStorage.setItem('cart', JSON.stringify(existingCart));
-        
-        const router = useRouter();
-        router.push('/cart');
-      };  
+    const router = useRouter();
 
+    const addToCart = (product) => {
+        const existingCart = JSON.parse(localStorage.getItem('cart')) || {};
+        const productId = product.id;
+      
+        if (existingCart[productId]) {
+          existingCart[productId] += 1;
+        } else {
+          existingCart[productId] = 1;
+        }
+      
+        localStorage.setItem('cart', JSON.stringify(existingCart));
+      
+        router.push('/cart');
+      };
+      
   return (
     <HStack w='full' justify="center" bg='#f0f0f5' pt='8'>
         <Flex direction="column" alignItems="flex-start" align="center" maxW='container.xl'>

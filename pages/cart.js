@@ -7,6 +7,7 @@ import { HStack, Flex, Box, Grid, Text, Heading, Button, Icon } from '@chakra-ui
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -15,6 +16,13 @@ const Cart = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const newSubtotal = cartItems.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+    setSubtotal(newSubtotal);
+  }, [cartItems]);
+
   const handleRemoveItem = (productToRemove) => {
     const updatedCartItems = cartItems.filter((product) => product.id !== productToRemove.id);
 
@@ -22,6 +30,31 @@ const Cart = () => {
 
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
   };
+
+  const calculateTotal = (totalFrete) => {
+    const subtotal = cartItems.reduce((total, product) => {
+      return total + (product.price_in_cents / 100) * product.quantity;
+    }, 0);
+  
+    if (totalFrete) {
+      return subtotal + 40;
+    }
+  
+    return subtotal;
+  };
+  
+
+  const handleUpdateQuantity = (productId, newQuantity) => {
+    const updatedCart = cartItems.map((item) => {
+      if (item.id === productId) {
+        item.quantity = newQuantity;
+      }
+      return item;
+    });
+
+    setCartItems(updatedCart);
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart)); }
 
   return (
     <>
@@ -39,7 +72,7 @@ const Cart = () => {
               <Flex direction='column' w='full' h='full' maxH='80'>
                 {cartItems.length > 0 ? (
                   cartItems.map((product) => (
-                    <CartItem key={product.id} product={product} onRemove={() => handleRemoveItem(product)} />
+                    <CartItem key={product.id} product={product} onRemove={() => handleRemoveItem(product)} onUpdateQuantity={handleUpdateQuantity}/>
                   ))
                 ) : (
                   <HStack h='full' bg='white' p='16' borderRadius='lg'> 
@@ -56,7 +89,7 @@ const Cart = () => {
                 </Flex>
                 <Flex direction='row' fontSize='md' mt='4' justify='space-between'>
                   <Text>Subtotal de produtos</Text>
-                  <Text>R$ 777,70</Text>
+                  <Text>R$ {calculateTotal(false).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Text>
                 </Flex>
                 <Flex direction='row' fontSize='md' mt='3' mb='6' justify='space-between'>
                   <Text>Entrega</Text>
@@ -65,7 +98,7 @@ const Cart = () => {
                   <hr></hr>
                 <Flex direction='row' fontSize='md' fontWeight='bold' mt='4' justify='space-between'>
                   <Text>Total</Text>
-                  <Text>R$ 777,70</Text>
+                  <Text>R$ {calculateTotal(true).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </Text>
                 </Flex>
                 <Flex direction='row' fontSize='md' fontWeight='bold' mt='12' justify='space-between'>
                   <Button 

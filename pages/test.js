@@ -5,7 +5,7 @@ import { Box, Heading, Text, Stack, Image, Button, HStack, Flex} from '@chakra-u
 import OrderBy from '@/components/OrderBy/OrderBy';
 import Paginate from '@/components/Paginate/Paginate';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useCart } from '../components/Cart/CartContext';
 
 const GET_PRODUCTS = gql`
   query {
@@ -22,11 +22,26 @@ const GET_PRODUCTS = gql`
 
 const Test = () => {
   
+  const { cartItemCount, setCartItemCount } = useCart();
+
   const addToCart = (product) => {
     const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-    existingCart.push(product);
+    const productId = product.id;
+  
+    const existingCartItem = existingCart.find((item) => item.id === productId);
+  
+    if (existingCartItem) {
+      existingCartItem.quantity = (existingCartItem.quantity || 1) + 1;
+    } else {
+      const productWithQuantity = { ...product, quantity: 1 };
+      existingCart.push(productWithQuantity);
+    }
+  
     localStorage.setItem('cart', JSON.stringify(existingCart));
-  };  
+  
+    setCartItemCount(existingCart.length);
+  };
+  
 
   const [currentPageState, setCurrentPageState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -80,7 +95,7 @@ const Test = () => {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,})}
               </Text>
-              <Button color='black' size="xs" onClick={() => addToCart(product)}>
+              <Button color='black' size="xs" onClick={(e) => { e.preventDefault(); addToCart(product); }}>
                 Adicionar ao Carrinho
               </Button>
             </Flex>
@@ -90,6 +105,7 @@ const Test = () => {
     ));
   };
 
+  
   const handlePageChange = ({ selected }) => {
     setCurrentPageState(selected);
   };
