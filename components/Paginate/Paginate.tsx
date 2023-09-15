@@ -2,6 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 import { Box } from '@chakra-ui/react';
+import { FiChevronLeft, FiChevronRight } from  'react-icons/fi'
 
 const Paginator = styled(Box)`
   display: flex;
@@ -53,8 +54,8 @@ const Paginate = ({ pageCount, currentPageState, handlePageChange, previousClass
   return (
     <Paginator>
       <ReactPaginate
-        previousLabel={'<'}
-        nextLabel={'>'}
+        previousLabel={<FiChevronLeft />}
+        nextLabel={<FiChevronRight />}
         breakLabel={'...'}
         pageCount={pageCount}
         marginPagesDisplayed={1}

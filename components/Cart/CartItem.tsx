@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 import { Flex, Box, Grid, Image, Text, Heading, Button, Icon, Select, HStack, MenuOptionGroup } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi'
+import { useCart } from "./CartContext";
 
 const CartItem = ({ product, onRemove, onUpdateQuantity}) => {
+  const { updateHeader, updateCartItemCount, cartItemCount, setCartItemCount, } = useCart();
   const [quantity, setQuantity] = useState(1);
 
   const handleRemove = () => {
     onRemove(product);
+    updateHeader();
+    updateCartItemCount(cartItemCount - product.quantity);
   };
 
   useEffect(() => {

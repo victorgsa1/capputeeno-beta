@@ -1,10 +1,10 @@
 import Header from "../components/Header/Header";
-import Test from "./test";
+import Main from "./main";
 export default function Home() {
   return (
     <>
       <Header/>
-      <Test/>
+      <Main/>
     </>
   );
 }

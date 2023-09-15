@@ -6,7 +6,7 @@ import { FiShoppingBag } from 'react-icons/fi';
 import { useCart } from "../Cart/CartContext";
 
 export default function Header() {
-
+    
     const { cartItemCount } = useCart();
     return (
         <HStack w="full" h="8vh" bg='white' justify="center">

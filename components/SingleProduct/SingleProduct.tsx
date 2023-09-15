@@ -4,28 +4,33 @@ import Link from 'next/link';
 import { FiShoppingBag } from 'react-icons/fi'
 import Backward from '../Backward/Backward';
 import { useRouter } from 'next/router';
-
-
+import { useCart } from '../Cart/CartContext';
 
 function SingleProduct({ product }) {
 
+    const { cartItemCount, setCartItemCount } = useCart();
     const router = useRouter();
 
     const addToCart = (product) => {
-        const existingCart = JSON.parse(localStorage.getItem('cart')) || {};
+        const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
         const productId = product.id;
       
-        if (existingCart[productId]) {
-          existingCart[productId] += 1;
+        const existingCartItem = existingCart.find((item) => item.id === productId);
+      
+        if (existingCartItem) {
+          existingCartItem.quantity = (existingCartItem.quantity || 1) + 1;
         } else {
-          existingCart[productId] = 1;
+          const productWithQuantity = { ...product, quantity: 1 };
+          existingCart.push(productWithQuantity);
         }
       
         localStorage.setItem('cart', JSON.stringify(existingCart));
       
+        setCartItemCount(existingCart.length);
+      
         router.push('/cart');
       };
-      
+
   return (
     <HStack w='full' justify="center" bg='#f0f0f5' pt='8'>
         <Flex direction="column" alignItems="flex-start" align="center" maxW='container.xl'>
@@ -78,7 +83,7 @@ function SingleProduct({ product }) {
                                 _hover={{
                                     bg: 'blue.800',
                                   }}
-                                onClick={() => addToCart(product)}
+                                onClick={(e) => { e.preventDefault(); addToCart(product); }}
                             >
                                 <Icon fontSize='22px' mr='2'>
                                     <FiShoppingBag />

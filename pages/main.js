@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { Box, Heading, Text, Stack, Image, Button, HStack, Flex} from '@chakra-ui/react';
 import OrderBy from '../components/OrderBy/OrderBy';
-import Paginate from '@/components/Paginate/Paginate';
+import Paginate from '../components/Paginate/Paginate';
 import Link from 'next/link';
 import { useCart } from '../components/Cart/CartContext';
 
@@ -20,10 +20,10 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const Test = () => {
+const Main = () => {
     const { cartItemCount, setCartItemCount } = useCart();
 
-  const addToCart = (product) => {
+    const addToCart = (product) => {
     const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
     const productId = product.id;
   
@@ -124,7 +124,7 @@ const Test = () => {
   };
 
   return (
-    <HStack w="full" justify="center" bg='#f0f0f5' pt='8'>
+    <HStack w="full" justify="center" bg='#f0f0f5' pt='8' overflowY='hidden'>
       <Flex direction="column" alignItems="flex-start" spacing={4} align="center" maxW='container.xl' px='4'>
         <Flex w="full" direction="row" alignItems="center" pb='4' justify="space-between">
           <HStack>
@@ -228,34 +228,12 @@ const Test = () => {
           </HStack>
         </Flex> 
 
-        <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4">
+        <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4" h='120vh' maxH='75vh' overflowY='auto'>
           {renderProducts()}
         </Box>
-      
-        <Flex direction='row' w='full'justify='end' pt='16' pb='6'>
-          <HStack>
-            <Box>  
-              <Paginate
-                pageCount={pageCount}
-                currentPageState={currentPageState}
-                handlePageChange={handlePageChange}
-                previousClassName='previousNum'
-                nextClassName='nextNum'
-              />
-            </Box>
-            <Box ml='2'>
-              <Paginate
-                pageCount={pageCount}
-                currentPageState={currentPageState}
-                handlePageChange={handlePageChange}
-                pageClassName={'numbers'}
-              />
-            </Box>
-          </HStack>
-        </Flex> 
       </Flex>
     </HStack>
   );
 };
 
-export default Test;
+export default Main;

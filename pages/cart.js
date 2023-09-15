@@ -69,7 +69,7 @@ const Cart = () => {
           </Link>
           <Flex direction='row' px="4" pt="4">
             <Grid templateColumns={['1fr', '1fr', '1fr', '8fr 4fr']} gap='4'>
-              <Flex direction='column' w='full' h='full' maxH='84vh' overflowY='auto'>
+              <Flex direction='column' w='full' h='full' maxH='80vh' overflowY='auto'>
                 {cartItems.length > 0 ? (
                   cartItems.map((product) => (
                     <CartItem key={product.id} product={product} onRemove={() => handleRemoveItem(product)} onUpdateQuantity={handleUpdateQuantity}/>
