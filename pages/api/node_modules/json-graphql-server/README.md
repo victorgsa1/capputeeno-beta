@@ -14,6 +14,11 @@ Inspired by the excellent [json-server](https://github.com/typicode/json-server)
 
 ## Example
 
+Follow the guide below starting from scratch, or see the example live on StackBlitz:
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/json-graphql-server)
+
+
 Create a `db.js` file.
 
 Your data file should export an object where the keys are the entity types. The values should be lists of entities, i.e. arrays of value objects with at least an `id` key. For instance:
@@ -86,7 +91,7 @@ Go to http://localhost:3000/?query=%7B%20Post%28id%3A%201%29%20%7B%20id%20title%
 
 The json-graphql-server accepts queries in GET and POST. Under the hood, it uses [the `express-graphql` module](https://github.com/graphql/express-graphql). Please refer to their documentations for details about passing variables, etc.
 
-Note that the server is [GraphiQL](https://github.com/graphql/graphiql) enabled, so you can query your server using a full-featured graphical user interface, providing autosuggest, history, etc.
+Note that the server is [GraphiQL](https://github.com/graphql/graphiql) enabled, so you can query your server using a full-featured graphical user interface, providing autosuggest, history, etc. Just browse http://localhost:3000/ to access it.
 
 ![GraphiQL client using json-graphql-server](http://static.marmelab.com/graphiql-json.png)
 
@@ -146,6 +151,19 @@ By convention, json-graphql-server expects all entities to have an `id` field th
 For every field named `*_id`, json-graphql-server creates a two-way relationship, to let you fetch related entities from both sides. For instance, the presence of the `user_id` field in the `posts` entity leads to the ability to fetch the related `User` for a `Post` - and the related `Posts` for a `User`.
 
 The `all*` queries accept parameters to let you sort, paginate, and filter the list of results. You can filter by any field, not just the primary key. For instance, you can get the posts written by user `123`. Json-graphql-server also adds a full-text query field named `q`, and created range filter fields for numeric and date fields. All types (excluding booleans and arrays) get a not equal filter. The detail of all available filters can be seen in the generated `*Filter` type.
+
+### Supported types
+
+| Type    | GraphQL Type        | Rule                                                          | Example value |
+|---------|---------------------|---------------------------------------------------------------|---------------|
+| Id      | `GraphQLID`         | `name === 'id' \|\| name.substr(name.length - 3) === '_id'`   | `1`           |
+| Integer | `GraphQLInt`        | `Number.isInteger(value)`                                     | `12`          |
+| Numeric | `GraphQLFloat`      | `!isNaN(parseFloat(value)) && isFinite(value)`                | `12.34`       |
+| Boolean | `GraphQLBoolean`    | `typeof value === 'boolean'`                                  | `false`       |
+| String  | `GraphQLString`     | `typeof value === 'string'`                                   | `'foo'`       |
+| Array   | `GraphQLList`       | `Array.isArray(value)`                                        | `['bar']`, `[12, 34]` |
+| Date    | `DateType` (custom) | `value instanceof Date \|\| isISODateString(value)`           | `new Date('2016-06-10T15:49:14.236Z')`, `'2016-06-10T15:49:14.236Z'` |
+| Object  | `GraphQLJSON`       | `Object.prototype.toString.call(value) === '[object Object]'` | `transport: { service: 'fakemail', auth: { user: 'fake@mail.com', pass: 'f00b@r' } }` |
 
 ## GraphQL Usage
 
@@ -391,7 +409,6 @@ Here is how you can use the queries and mutations generated for your data, using
             </pre>
         </td>
     </tr>
-
     <tr>
         <td>
             <pre>
@@ -451,7 +468,7 @@ Useful when using XMLHttpRequest directly or libraries such as [axios](https://w
 Add a `script` tag referencing the library:
 
 ```html
-<script src="../lib/json-graphql-server.min.js"></script>
+<script src="../lib/json-graphql-server.client.min.js"></script>
 ```
 
 It will expose the `JsonGraphqlServer` as a global object:
@@ -581,6 +598,49 @@ graphql(schema, query).then(result => {
 ```
 
 Or available in the global scope when running on a client as `jsonSchemaBuilder`.
+
+## Plain Schema
+
+If you want to use another server type instead of the built in graphql express,
+like apollo-server or etc, you can expose the plain schema to be built into
+an executable schema (there may be version issues otherwise).
+
+This uses the export `getPlainSchema`.
+
+```js
+import { ApolloServer } from 'apollo-server';
+import { makeExecutableSchema } from '@graphql-tools/schema'; // or graphql-tools
+import { applyMiddleware } from 'graphql-middleware';
+import { getPlainSchema } from 'json-graphql-server';
+
+const data = { };
+
+// Example middlewares
+const logInput = async (resolve, root, args, context, info) => {
+    console.log(`1. logInput: ${JSON.stringify(args)}`);
+    const result = await resolve(root, args, context, info);
+    console.log(`5. logInput`);
+    return result;
+};
+const logResult = async (resolve, root, args, context, info) => {
+    console.log(`2. logResult`);
+    const result = await resolve(root, args, context, info);
+    console.log(`4. logResult: ${JSON.stringify(result)}`);
+    return result;
+};
+
+// Leverage getPlainSchema
+const schema = applyMiddleware(
+    makeExecutableSchema(getPlainSchema(data)),
+    logInput,
+    logResult
+);
+const server = new ApolloServer({
+    schema,
+});
+server.listen({ port: 3000 });
+
+```
 
 ## Deployment
 

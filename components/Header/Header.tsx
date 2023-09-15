@@ -12,7 +12,7 @@ export default function Header() {
         <HStack w="full" h={['14vh',' 12vh', '8vh']} bg='white' justify="center">
             <HStack w="full" maxW='container.xl' px="4" justify="space-between">
                 <Grid templateColumns={['1fr', '1fr', '1fr', '4fr 12fr']} w='full'>
-                    <Flex justify='center' pb='4'>
+                    <Flex justify={[ 'center', 'center', 'start' ]} pb='4'>
                         <Link href={'/'}>
                             <Image src="/capputeeno.svg"></Image>
                         </Link>
