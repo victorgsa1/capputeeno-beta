@@ -125,18 +125,13 @@ const Main = () => {
 
   return (
     <HStack w="full" justify="center" bg='#f0f0f5' pt='8' overflowY='hidden'>
-      <Flex direction="column" alignItems="flex-start" spacing={4} align="center" maxW='container.xl' px='4'>
-        <Flex w="full" direction="row" alignItems="center" pb='4' justify="space-between">
-          <HStack>
+      <Flex w='full' maxW='container.xl' direction="column" alignItems="flex-start" spacing={4} align="center" px='4'>
+        <Flex w="full" direction={['column', 'row', 'row',]} alignItems="center" pb='4' justify="space-between">
+          <HStack w='full'>
             <Button
               variant="ghost" 
-              minW='auto'
               color='#737380'
               borderRadius={ 0 }
-              borderBottom={selectedCategory === null ? '4px solid orange' : 'none'}
-              _hover={{
-                borderBottom: '4px solid orange',
-              }}
               _active={{
                 bg: 'ghost !important',
                 color: 'black !important',
@@ -149,7 +144,12 @@ const Main = () => {
               }}
               onClick={() => handleCategoryChange(null)}
             > 
-              TODOS OS PRODUTOS
+              <Text fontSize={['sm', 'sm', 'md']} borderBottom={selectedCategory === null ? '4px solid orange' : 'none'} 
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}>
+                TODOS OS PRODUTOS
+              </Text>
             </Button>
 
             <Button
@@ -157,10 +157,6 @@ const Main = () => {
               minW='auto'
               color='#737380'
               borderRadius={ 0 }
-              borderBottom={selectedCategory === 'mugs' ? '4px solid orange' : 'none'}
-              _hover={{
-                borderBottom: '4px solid orange',
-              }}
               _active={{
                 bg: 'ghost',
                 color: 'black',
@@ -173,7 +169,12 @@ const Main = () => {
               }}
               onClick={() => handleCategoryChange('mugs')}
             > 
-              CANECAS
+              <Text fontSize={['sm', 'sm', 'md']} borderBottom={selectedCategory === 'mugs' ? '4px solid orange' : 'none'}
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}>
+                CANECAS
+              </Text>
             </Button>
 
             <Button
@@ -181,10 +182,6 @@ const Main = () => {
               minW='auto'
               color='#737380'
               borderRadius={ 0 }
-              borderBottom={selectedCategory === 't-shirts' ? '4px solid orange' : 'none'}
-              _hover={{
-                borderBottom: '4px solid orange',
-              }}
               _active={{
                 bg: 'ghost',
                 color: 'black',
@@ -197,16 +194,21 @@ const Main = () => {
               }}
               onClick={() => handleCategoryChange('t-shirts')}
             > 
-              T-SHIRTS
+              <Text fontSize={['sm', 'sm', 'md']} borderBottom={selectedCategory === 't-shirts' ? '4px solid orange' : 'none'}
+              _hover={{
+                borderBottom: '4px solid orange',
+              }}>
+                T-SHIRTS
+              </Text>
             </Button>
           </HStack>
-          <HStack>
-            <Flex direction="row" alignItems="center" mr='-2'>
+          <HStack w={['full', 'full', ' ', ' ']} justify={['start', 'flex-end', 'flex-end']}>
+            <Flex direction="row"  mr='-2'>
               <OrderBy selectedSort={selectedSort} setSelectedSort={setSelectedSort} products={allProducts} setSortedProducts={setSortedProducts} />
             </Flex>
           </HStack>  
         </Flex>      
-        <Flex direction='row' w='full'justify='end' pb='8'>
+        <Flex direction='row' w='full' justify='end' pb='8'>
           <HStack>
             <Box>  
               <Paginate
@@ -228,7 +230,7 @@ const Main = () => {
           </HStack>
         </Flex> 
 
-        <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gridGap="4" h='120vh' maxH='75vh' overflowY='auto'>
+        <Box display="grid" gridTemplateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']} gridGap="4" h='120vh' maxH='75vh' overflowY='auto'>
           {renderProducts()}
         </Box>
       </Flex>
