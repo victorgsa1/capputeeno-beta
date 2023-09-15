@@ -3,8 +3,20 @@ import { Box, Image, Heading, Text, Button, Flex, HStack, Grid, Icon } from '@ch
 import Link from 'next/link';
 import { FiShoppingBag } from 'react-icons/fi'
 import Backward from '../Backward/Backward';
+import { useRouter } from 'next/router';
+
 
 function SingleProduct({ product }) {
+
+    const addToCart = (product) => {
+        const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+        existingCart.push(product);
+        localStorage.setItem('cart', JSON.stringify(existingCart));
+        
+        const router = useRouter();
+        router.push('/cart');
+      };  
+
   return (
     <HStack w='full' justify="center" bg='#f0f0f5' pt='8'>
         <Flex direction="column" alignItems="flex-start" align="center" maxW='container.xl'>
@@ -57,6 +69,7 @@ function SingleProduct({ product }) {
                                 _hover={{
                                     bg: 'blue.800',
                                   }}
+                                onClick={() => addToCart(product)}
                             >
                                 <Icon fontSize='22px' mr='2'>
                                     <FiShoppingBag />

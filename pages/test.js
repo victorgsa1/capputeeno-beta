@@ -5,14 +5,7 @@ import { Box, Heading, Text, Stack, Image, Button, HStack, Flex} from '@chakra-u
 import OrderBy from '@/components/OrderBy/OrderBy';
 import Paginate from '@/components/Paginate/Paginate';
 import Link from 'next/link';
-
-const addToCart = (product) => {
-  const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-
-  existingCart.push(product);
-
-  localStorage.setItem('cart', JSON.stringify(existingCart));
-};
+import { useRouter } from 'next/router';
 
 const GET_PRODUCTS = gql`
   query {
@@ -31,11 +24,9 @@ const Test = () => {
   
   const addToCart = (product) => {
     const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-  
     existingCart.push(product);
-  
     localStorage.setItem('cart', JSON.stringify(existingCart));
-  };
+  };  
 
   const [currentPageState, setCurrentPageState] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -83,17 +74,16 @@ const Test = () => {
           <Box p="4">
             <Heading size="sm" fontWeight="light" fontFamily='brand' pb='2'>{product.name}</Heading>
             <hr></hr>
-            <Text fontSize="md" fontWeight="bold" color="black" pt='2'>
-              R$ {(product.price_in_cents / 100).toLocaleString('pt-BR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,})}
-            </Text>
-            <Text fontSize="sm" color="gray.500">
-              {/* Categoria: {product.category} */}
-            </Text>
-            <Button mt="4" colorScheme="black" size="sm" variant="outline" onClick={() => addToCart(product)}>
-              Adicionar ao Carrinho
-            </Button>
+            <Flex direction='row' justify='space-between' alignItems='center' mt='2'>
+              <Text fontSize="md" fontWeight="bold" color="black">
+                R$ {(product.price_in_cents / 100).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,})}
+              </Text>
+              <Button color='black' size="xs" onClick={() => addToCart(product)}>
+                Adicionar ao Carrinho
+              </Button>
+            </Flex>
           </Box>
         </Box>
       </Link>
